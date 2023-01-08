@@ -19,16 +19,18 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("orders")
 public class OrderController {
 
-
+    @Autowired
+    AmazOff_service as;
     @PostMapping("/add-order")
     public ResponseEntity<String> addOrder(@RequestBody Order order){
-
+        as.addOrder(order);
         return new ResponseEntity<>("New order added successfully", HttpStatus.CREATED);
     }
 
     @PostMapping("/add-partner/{partnerId}")
     public ResponseEntity<String> addPartner(@PathVariable String partnerId){
-
+        DeliveryPartner dp = new DeliveryPartner(partnerId);
+        as.addpartner(dp);
         return new ResponseEntity<>("New delivery partner added successfully", HttpStatus.CREATED);
     }
 
@@ -36,13 +38,14 @@ public class OrderController {
     public ResponseEntity<String> addOrderPartnerPair(@RequestParam String orderId, @RequestParam String partnerId){
 
         //This is basically assigning that order to that partnerId
+        as.assigning(orderId,partnerId);
         return new ResponseEntity<>("New order-partner pair added successfully", HttpStatus.CREATED);
     }
 
     @GetMapping("/get-order-by-id/{orderId}")
     public ResponseEntity<Order> getOrderById(@PathVariable String orderId){
 
-        Order order= null;
+        Order order= as.getOrder(orderId);
         //order should be returned with an orderId.
 
         return new ResponseEntity<>(order, HttpStatus.CREATED);
@@ -51,7 +54,7 @@ public class OrderController {
     @GetMapping("/get-partner-by-id/{partnerId}")
     public ResponseEntity<DeliveryPartner> getPartnerById(@PathVariable String partnerId){
 
-        DeliveryPartner deliveryPartner = null;
+        DeliveryPartner deliveryPartner = as.getPartner(partnerId);
 
         //deliveryPartner should contain the value given by partnerId
 
@@ -61,7 +64,7 @@ public class OrderController {
     @GetMapping("/get-order-count-by-partner-id/{partnerId}")
     public ResponseEntity<Integer> getOrderCountByPartnerId(@PathVariable String partnerId){
 
-        Integer orderCount = 0;
+        Integer orderCount = as.order_count(partnerId);
 
         //orderCount should denote the orders given by a partner-id
 
@@ -79,7 +82,7 @@ public class OrderController {
 
     @GetMapping("/get-all-orders")
     public ResponseEntity<List<String>> getAllOrders(){
-        List<String> orders = null;
+        List<String> orders = as.listOrder();
 
         //Get all orders
         return new ResponseEntity<>(orders, HttpStatus.CREATED);

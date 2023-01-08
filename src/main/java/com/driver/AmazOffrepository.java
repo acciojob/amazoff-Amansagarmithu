@@ -43,4 +43,15 @@ public class AmazOffrepository {
         }
         return ans;
     }
+    public List<String> listbyorder(String partnerid){
+        return order_partner.get(partnerid);
+    }
+    public int unassignOrder(){
+        int orders = orderdb.size();
+        int count = 0;
+        for(String s:order_partner.keySet()){
+            count+=(order_partner.get(s).size());
+        }
+        return orders-count;
+    }
 }

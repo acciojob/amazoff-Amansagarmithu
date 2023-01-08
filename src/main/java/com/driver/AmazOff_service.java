@@ -29,4 +29,10 @@ public class AmazOff_service {
     public List<String> listOrder(){
         return ar.listOfOrder();
     }
+    public List<String> listbyorder(String partnerid){
+        return ar.listbyorder(partnerid);
+    }
+    public int unassigned(){
+        return ar.unassignOrder();
+    }
 }

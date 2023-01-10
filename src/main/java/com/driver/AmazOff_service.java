@@ -35,4 +35,16 @@ public class AmazOff_service {
     public int unassigned(){
         return ar.unassignOrder();
     }
+    public int getorderleftfromtime(String time,String partnerid){
+        return ar.getOrderLeftAfterGivenTime(time,partnerid);
+    }
+    public String gettime(String PartnerId){
+        return ar.getLastDeliveryTime(PartnerId);
+    }
+    public void deleteByPartnerId(String partnerId){
+        ar.deletepartnerbyid(partnerId);
+    }
+    public void deleteorder(String OrderId){
+        ar.deleteorder(OrderId);
+    }
 }
